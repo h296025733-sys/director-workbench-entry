@@ -14,6 +14,7 @@
     .line{height:4px;margin-top:30px;overflow:hidden;border-radius:99px;background:#ececf0}
     .line::after{content:"";display:block;width:42%;height:100%;border-radius:inherit;background:#17171a;animation:move 1.25s ease-in-out infinite}
     a{display:inline-block;margin-top:24px;color:#17171a;font-size:14px;font-weight:650;text-decoration:none}
+    [hidden]{display:none!important}
     @keyframes move{0%{transform:translateX(-110%)}100%{transform:translateX(350%)}}
     @media(prefers-reduced-motion:reduce){.line::after{animation:none;width:100%}}
   </style>
@@ -21,10 +22,32 @@
 <body>
   <main>
     <div class="mark">✦</div>
-    <h1>正在打开导演工作台</h1>
-    <p>入口会自动连接到公司电脑。</p>
-    <div class="line" aria-hidden="true"></div><a id="enter" href="https://note-harper-political-properties.trycloudflare.com">立即进入 →</a>
+    <h1 id="heading">正在打开导演工作台</h1>
+    <p id="message">正在连接公司电脑…</p>
+    <div id="progress" class="line" aria-hidden="true"></div>
+    <a id="enter" href="#" hidden>重新连接 →</a>
   </main>
-  <script>setTimeout(function(){location.replace("https://note-harper-political-properties.trycloudflare.com")},650)</script>
+  <script>
+    (async function(){
+      var heading=document.getElementById("heading");
+      var message=document.getElementById("message");
+      var progress=document.getElementById("progress");
+      var enter=document.getElementById("enter");
+      try{
+        var response=await fetch("./target.json?v="+Date.now(),{cache:"no-store"});
+        var target=await response.json();
+        if(!response.ok||!/^https://[a-z0-9-]+.trycloudflare.com/?$/i.test(target.url||""))throw new Error("offline");
+        enter.href=target.url;
+        setTimeout(function(){location.replace(target.url)},350);
+      }catch(_error){
+        heading.textContent="导演工作台暂未启动";
+        message.textContent="请联系管理员启动公司电脑上的免费入口。";
+        progress.hidden=true;
+        enter.hidden=false;
+        enter.textContent="刷新状态 →";
+        enter.href=location.pathname+"?v="+Date.now();
+      }
+    })();
+  </script>
 </body>
 </html>
