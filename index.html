@@ -36,7 +36,8 @@
       try{
         var response=await fetch("./target.json?v="+Date.now(),{cache:"no-store"});
         var target=await response.json();
-        if(!response.ok||!/^https://[a-z0-9-]+.trycloudflare.com/?$/i.test(target.url||""))throw new Error("offline");
+        var parsed=new URL(target.url||"");
+        if(!response.ok||parsed.protocol!=="https:"||!parsed.hostname.endsWith(".trycloudflare.com"))throw new Error("offline");
         enter.href=target.url;
         setTimeout(function(){location.replace(target.url)},350);
       }catch(_error){
