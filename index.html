@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <title>导演工作台</title>
+  <title>镜序 · AI 影像创作台</title>
   <style>
     :root{color-scheme:light;font-family:Inter,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f5f7;color:#17171a}
     *{box-sizing:border-box}body{min-height:100vh;margin:0;display:grid;place-items:center;padding:24px}
@@ -22,7 +22,7 @@
 <body data-loader-version="2">
   <main>
     <div class="mark">✦</div>
-    <h1 id="heading">正在打开导演工作台</h1>
+    <h1 id="heading">正在打开镜序</h1>
     <p id="message">正在连接公司电脑…</p>
     <div id="progress" class="line" aria-hidden="true"></div>
     <a id="enter" href="#" hidden>重新连接 →</a>
@@ -41,7 +41,7 @@
         enter.href=target.url;
         setTimeout(function(){location.replace(target.url)},350);
       }catch(_error){
-        heading.textContent="导演工作台暂未启动";
+        heading.textContent="镜序暂未启动";
         message.textContent="请联系管理员启动公司电脑上的免费入口。";
         progress.hidden=true;
         enter.hidden=false;
