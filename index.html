@@ -33,7 +33,13 @@
       var message=document.getElementById("message");
       var progress=document.getElementById("progress");
       var enter=document.getElementById("enter");
+      var stableProxy="";
       try{
+        if(stableProxy){
+          enter.href=stableProxy;
+          setTimeout(function(){location.replace(stableProxy)},250);
+          return;
+        }
         var response=await fetch("./target.json?v="+Date.now(),{cache:"no-store"});
         var target=await response.json();
         var parsed=new URL(target.url||"");
